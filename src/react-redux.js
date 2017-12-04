@@ -16,15 +16,11 @@ Provider.childContextTypes = {
   store: PropTypes.object
 }
 export const connect = (mapStateToProps, mapDispatchToState) => {
-  return (_comp) => {
+  return (Comp) => {
     class Proxy extends React.Component {
       static contextTypes = {
         store: PropTypes.object
       }
-      constructor() {
-        super();
-      }
-
       componentWillMount() {
         this.setState({...mapStateToProps(this.context.store.getState())});
         this.unsubscribe = this.context.store.subscribe(() => {
@@ -38,7 +34,7 @@ export const connect = (mapStateToProps, mapDispatchToState) => {
 
       render() {
         return (
-          <_comp {...this.state} {...mapDispatchToState(this.context.store.dispatch)}></_comp>
+          <Comp {...this.state} {...mapDispatchToState(this.context.store.dispatch)}></Comp>
         )
       }
     }
